@@ -18,7 +18,7 @@ public class MaxDiffBetweenNodeAndAncestor {
             int rightChildIndex = 2 * i + 2;
             int rootVal = bSTArray[i];
 
-            int val = findDiff(bSTArray, leftChildIndex, rightChildIndex, size - 1, rootVal);
+            int val = findDiff(bSTArray, leftChildIndex, size - 1, rootVal);
 
             if(val > max) {
                 max = val;
@@ -27,16 +27,16 @@ public class MaxDiffBetweenNodeAndAncestor {
         return max;
     }
 
-    public static int findDiff(int[] array, int leftIndex, int rightIndex, int lastIndex, int root) {
+    public static int findDiff(int[] array, int leftIndex, int lastIndex, int root) {
         int leftTreeMaxDiff = 0;
         int rightTreeMaxDiff = 0;
 
         if(leftIndex <= lastIndex && array[leftIndex] != -1) {
-            leftTreeMaxDiff = Math.max(Math.abs(root - array[leftIndex]), findDiff(array, 2 * leftIndex + 1, 2 * leftIndex + 2, lastIndex, root));
+            leftTreeMaxDiff = Math.max(Math.abs(root - array[leftIndex]), findDiff(array, 2 * leftIndex + 1, lastIndex, root));
         }
 
-        if(rightIndex <= lastIndex && array[rightIndex] != -1) {
-            rightTreeMaxDiff = Math.max(Math.abs(root - array[rightIndex]), findDiff(array, 2 * rightIndex + 1, 2 * rightIndex + 2, lastIndex, root));
+        if(leftIndex + 1 <= lastIndex && array[leftIndex + 1] != -1) {
+            rightTreeMaxDiff = Math.max(Math.abs(root - array[leftIndex + 1]), findDiff(array, 2 * (leftIndex + 1) + 1, lastIndex, root));
         }
 
         return Math.max(leftTreeMaxDiff, rightTreeMaxDiff);
